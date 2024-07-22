@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     
     var delegate: TaskDelegate?
     var toDoList: [ToDoItem] = []
+    private var taskManager = TaskManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,19 +44,11 @@ class ViewController: UIViewController {
     }
 
     func updateTasks() {
-        toDoList = loadToDoList()
+//        toDoList = loadToDoList()
+        toDoList = taskManager.getItems()
         tableView.reloadData()
     }
-    
-    @objc func longPressed(sender: UILongPressGestureRecognizer) {
-        if sender.state == UIGestureRecognizer.State.began {
-            if tableView.isEditing {
-                tableView.isEditing = false
-            } else {
-                tableView.isEditing = true
-            }
-        }
-    }
+
 
     @IBAction func didTapAdd() {
         let vc = storyboard?.instantiateViewController(withIdentifier: "entry") as! EntryViewController
@@ -82,7 +75,8 @@ class ViewController: UIViewController {
             // done editing
             tableView.isEditing = true
             //save todolisthere
-            saveToDoList(toDoList: toDoList)
+//            saveToDoList(toDoList: toDoList)
+            taskManager.saveItems(toDoItems: toDoList)
             updateTasks()
         }
     }
@@ -116,18 +110,21 @@ extension ViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        toDoList.swapAt(sourceIndexPath.row, destinationIndexPath.row)
+//        toDoList.swapAt(sourceIndexPath.row, destinationIndexPath.row)
+        taskManager.swapItem(startingIndex: sourceIndexPath.row, destinationIndex: destinationIndexPath.row)
     }
 }
 
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return toDoList.count
+        return taskManager.getItems().count
+//        return toDoList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TaskCell
-        cell.taskLabel.text = toDoList[indexPath.row].title
+//        cell.taskLabel.text = toDoList[indexPath.row].title
+        cell.taskLabel.text = taskManager.getItems()[indexPath.row].title
         
         return cell
     }

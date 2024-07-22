@@ -16,6 +16,7 @@
 		D22065382C4572A000B0EE0B /* EntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22065372C4572A000B0EE0B /* EntryViewController.swift */; };
 		D220653A2C4572B300B0EE0B /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22065392C4572B300B0EE0B /* TaskViewController.swift */; };
 		D2A03F562C4AC16800596E73 /* ToDoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A03F552C4AC16800596E73 /* ToDoItem.swift */; };
+		D2A9B2922C4ECC1200A78CC1 /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A9B2912C4ECC1200A78CC1 /* TaskManager.swift */; };
 		D2BEFF9B2C4D729800F785E2 /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BEFF9A2C4D729800F785E2 /* TaskCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +32,7 @@
 		D22065372C4572A000B0EE0B /* EntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewController.swift; sourceTree = "<group>"; };
 		D22065392C4572B300B0EE0B /* TaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
 		D2A03F552C4AC16800596E73 /* ToDoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItem.swift; sourceTree = "<group>"; };
+		D2A9B2912C4ECC1200A78CC1 /* TaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
 		D2BEFF9A2C4D729800F785E2 /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -99,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				D2A03F552C4AC16800596E73 /* ToDoItem.swift */,
+				D2A9B2912C4ECC1200A78CC1 /* TaskManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -176,6 +179,7 @@
 			files = (
 				D22065282C456E8C00B0EE0B /* ViewController.swift in Sources */,
 				D2BEFF9B2C4D729800F785E2 /* TaskCell.swift in Sources */,
+				D2A9B2922C4ECC1200A78CC1 /* TaskManager.swift in Sources */,
 				D22065382C4572A000B0EE0B /* EntryViewController.swift in Sources */,
 				D2A03F562C4AC16800596E73 /* ToDoItem.swift in Sources */,
 				D220653A2C4572B300B0EE0B /* TaskViewController.swift in Sources */,

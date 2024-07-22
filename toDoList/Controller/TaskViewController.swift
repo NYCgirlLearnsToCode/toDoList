@@ -29,9 +29,9 @@ class TaskViewController: UIViewController, TaskDelegate {
         print("viewdidload taskvc")
     }
     
-        func passTask(toDoList: [ToDoItem], index: Int) {
-            self.toDoList = toDoList
-            self.index = index
+    func passTask(toDoList: [ToDoItem], index: Int) {
+        self.toDoList = toDoList
+        self.index = index
     }
     
     @objc func editTask() {
