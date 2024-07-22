@@ -13,6 +13,7 @@ class TaskViewController: UIViewController, TaskDelegate {
     @IBOutlet weak var label: UILabel!
     
     var update: (() -> Void)?
+    var taskManager: TaskManager?
     var toDoList : [ToDoItem] = []
     var index: Int = 0
 
@@ -48,12 +49,7 @@ class TaskViewController: UIViewController, TaskDelegate {
     }
 
     @objc func deleteTask() {
-        toDoList.remove(at: index)
-        //save
-        let defaults = UserDefaults.standard
-        if let encoded = try? JSONEncoder().encode(toDoList) {
-            defaults.set(encoded, forKey: "ToDoList")
-        }
+        taskManager?.deleteItem(index: index)
         // refresh tableview
         update?()
         navigationController?.popViewController(animated: true)

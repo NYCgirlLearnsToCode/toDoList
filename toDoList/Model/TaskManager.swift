@@ -43,6 +43,7 @@ class TaskManager {
     
     func deleteItem(index: Int) {
         toDoItems.remove(at: index)
+        saveItems(toDoItems: toDoItems)
     }
     
     func getItems() -> [ToDoItem] {

@@ -96,6 +96,7 @@ extension ViewController: UITableViewDelegate {
         let vc = storyboard?.instantiateViewController(withIdentifier: "task") as! TaskViewController
         vc.title = "New Task"
         self.delegate = vc
+        vc.taskManager = taskManager
         vc.update = {
             DispatchQueue.main.async { [weak self] in
                 self?.updateTasks()
