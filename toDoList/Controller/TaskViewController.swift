@@ -7,21 +7,21 @@
 
 import UIKit
 
+protocol TaskVCDelegate {
+    func deleteTask(index: Int)
+}
 
 class TaskViewController: UIViewController, TaskDelegate {
 
     @IBOutlet weak var label: UILabel!
     
-    var update: (() -> Void)?
-    var taskManager: TaskManager?
-    var toDoList : [ToDoItem] = []
+    var delegate: TaskVCDelegate?
+    var toDoItem :ToDoItem!
     var index: Int = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        label.text = toDoList[index].title
-        label.sizeToFit()
+        label.text = toDoItem.title
         let editBarButtonItem = UIBarButtonItem(title: "Edit", style: .done, target: self, action: #selector(editTask))
         let deleteBarButtonItem = UIBarButtonItem(title: "Delete", style: .done, target: self, action: #selector(deleteTask))
         
@@ -30,28 +30,26 @@ class TaskViewController: UIViewController, TaskDelegate {
         print("viewdidload taskvc")
     }
     
-    func passTask(toDoList: [ToDoItem], index: Int) {
-        self.toDoList = toDoList
+    func passTask(toDoItem: ToDoItem, index: Int) {
+        self.toDoItem = toDoItem
         self.index = index
     }
     
     @objc func editTask() {
         //nav to entryvc and send the text and index
         let vc = storyboard?.instantiateViewController(withIdentifier: "entry") as! EntryViewController
+        if let mainVC = self.navigationController?.viewControllers.first as? EntryVCDelegate {
+            vc.delegate = mainVC
+        }
         vc.title = "Edit task"
+        vc.toDoItem = toDoItem
         vc.index = index
-        vc.toDoList = toDoList
         vc.state = .edit
-        //pass update along to EntryVC
-        vc.update = update
-        update?()
         navigationController?.pushViewController(vc, animated: true)
     }
 
     @objc func deleteTask() {
-        taskManager?.deleteItem(index: index)
-        // refresh tableview
-        update?()
+        delegate?.deleteTask(index: index)
         navigationController?.popViewController(animated: true)
     }
 }

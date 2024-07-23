@@ -24,17 +24,22 @@ class TaskManager {
         }
     }
 
-    func updateItem(index: Int, newItem: ToDoItem, toDoList: [ToDoItem]) {
+    func addItem(item: ToDoItem) {
+        toDoItems.append(item)
+        saveItems()
+    }
+
+    func updateItem(index: Int, newItem: ToDoItem) {
         toDoItems[index] = newItem
-        saveItems(toDoItems: toDoItems)
+        saveItems()
     }
     
     func swapItem(startingIndex: Int, destinationIndex: Int) {
         toDoItems.swapAt(startingIndex, destinationIndex)
-        saveItems(toDoItems: toDoItems)
+        saveItems()
     }
     
-    func saveItems(toDoItems: [ToDoItem]) {
+    func saveItems() {
         let defaults = UserDefaults.standard
         if let encoded = try? JSONEncoder().encode(toDoItems) {
             defaults.set(encoded, forKey: userDefaultsKey)
@@ -43,7 +48,7 @@ class TaskManager {
     
     func deleteItem(index: Int) {
         toDoItems.remove(at: index)
-        saveItems(toDoItems: toDoItems)
+        saveItems()
     }
     
     func getItems() -> [ToDoItem] {

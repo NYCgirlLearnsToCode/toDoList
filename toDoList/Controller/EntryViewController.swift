@@ -7,8 +7,15 @@
 
 import UIKit
 
+protocol EntryVCDelegate {
+    func addNewItem(toDoItem: ToDoItem)
+    func editItem(toDoItem: ToDoItem, index: Int)
+}
+
 class EntryViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var field: UITextField!
+    
+    var delegate: EntryVCDelegate?
     
     enum State {
         case save
@@ -16,7 +23,7 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
     }
     
     var update: (() -> Void)?
-    var toDoList: [ToDoItem] = []
+    var toDoItem: ToDoItem!
     var state: State = .save
     var index: Int = 0
 
@@ -27,60 +34,30 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
             case .save:
                 navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveTask))
             case .edit:
-            // TODO - get text from taskvc
-            field.text = toDoList[index].title
+            field.text = toDoItem.title
                 navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .done, target: self, action: #selector(editTask))
         }
         
         print("viewDidLoad entryvc")
     }
 
-    
-    func loadToDoList() -> [ToDoItem] {
-        let defaults = UserDefaults.standard
-        if let savedToDoList = defaults.object(forKey: "ToDoList") as? Data {
-            if let decodedToDoList = try? JSONDecoder().decode([ToDoItem].self, from: savedToDoList) {
-                return decodedToDoList
-            }
-        }
-        return []
-    }
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         saveTask()
         return true
     }
     
-    // TODO - save data
-    func saveToDoList(toDoList: [ToDoItem]) {
-        let defaults = UserDefaults.standard
-        if let encoded = try? JSONEncoder().encode(toDoList) {
-            defaults.set(encoded, forKey: "ToDoList")
-        }
-    }
-    
     @objc func editTask() {
         guard let text = field.text, !text.isEmpty else { return }
-        if toDoList.isEmpty {
-            toDoList = loadToDoList()
-        }
 
         let updatedItem = ToDoItem(title: text, isCompleted: false)
-        toDoList[index] = updatedItem
-        saveToDoList(toDoList: toDoList)
-        //update tableview
-        update?()
+        delegate?.editItem(toDoItem: updatedItem, index: index)
         navigationController?.popToRootViewController(animated: true)
     }
 
     @objc func saveTask() {
         guard let text = field.text, !text.isEmpty else { return }
-        toDoList = loadToDoList()
         let newItem = ToDoItem(title: text, isCompleted: false)
-        toDoList.append(newItem)
-        saveToDoList(toDoList: toDoList)
-        //update tableview
-        update?()
+        delegate?.addNewItem(toDoItem: newItem)
         navigationController?.popViewController(animated: true)
     }
 }
